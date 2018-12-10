@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "711396487785",
+    "firebase_url": "https://aisafe-9f1c7.firebaseio.com",
+    "project_id": "aisafe-9f1c7",
+    "storage_bucket": "aisafe-9f1c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711396487785:android:04f53f6330a3b37c",
+        "android_client_info": {
+          "package_name": "com.example.see.aisafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711396487785-a7p172noc70qr1uohjkg7gsrn64e50t2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfm22Vrs1SDfANaW5K-j4WGvhZRex4kMY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
