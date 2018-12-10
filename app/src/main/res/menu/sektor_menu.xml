@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Edit Kebutuhan"
+        android:icon="@drawable/ic_edit_black"
+        android:id="@+id/edit_kebutuhan"/>
+    <item
+        android:title="History Edit"
+        android:icon="@drawable/ic_star_white"
+        android:id="@+id/history_kebutuhan"/>
+
+</menu>

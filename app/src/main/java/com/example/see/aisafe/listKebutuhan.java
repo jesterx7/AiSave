@@ -4,12 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -35,13 +37,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
+
 public class listKebutuhan extends Fragment {
     View myView;
     RelativeLayout layout;
     LinearLayout llListKebutuhan;
     TextView tvQtyKerusakan, tvQtyKorban;
     ListView lvKebutuhan;
-    FloatingActionButton fabEditSektor;
+    FabSpeedDial fabMenu;
 
     private String namaSektor;
     private ArrayList<String> listKebutuhan = new ArrayList<>();
@@ -57,7 +62,7 @@ public class listKebutuhan extends Fragment {
         tvQtyKorban = myView.findViewById(R.id.tvQtyKorban);
         llListKebutuhan = myView.findViewById(R.id.llListKebutuhan);
         lvKebutuhan = myView.findViewById(R.id.lvKebutuhan);
-        fabEditSektor = myView.findViewById(R.id.fabEdit);
+        fabMenu = myView.findViewById(R.id.fabMenu);
 
         final String keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("sektor");
@@ -73,22 +78,37 @@ public class listKebutuhan extends Fragment {
 
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(namaSektor);
 
-        fabEditSektor.setOnClickListener(new View.OnClickListener() {
+        fabMenu.setMenuListener(new FabSpeedDial.MenuListener() {
             @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("infoSektor", infoSektor);
-                bundle.putStringArrayList("qtyKebutuhan", qtyKebutuhan);
-                bundle.putStringArrayList("listKebutuhan", listKebutuhan);
-                bundle.putString("keyBencana", keyBencana);
-                bundle.putString("namaSektor", namaSektor);
-                Fragment fragment = new EditSektor();
-                fragment.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, fragment);
-                fragmentTransaction.addToBackStack("tag");
-                fragmentTransaction.commit();
+            public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                if (menuItem.getTitle().equals("Edit Kebutuhan")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("infoSektor", infoSektor);
+                    bundle.putStringArrayList("qtyKebutuhan", qtyKebutuhan);
+                    bundle.putStringArrayList("listKebutuhan", listKebutuhan);
+                    bundle.putString("keyBencana", keyBencana);
+                    bundle.putString("namaSektor", namaSektor);
+                    Fragment fragment = new EditSektor();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    fragmentTransaction.addToBackStack("tag");
+                    fragmentTransaction.commit();
+                } else {
+
+                }
+                return true;
+            }
+
+            @Override
+            public void onMenuClosed() {
+
             }
         });
 

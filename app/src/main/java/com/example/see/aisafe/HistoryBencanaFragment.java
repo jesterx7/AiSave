@@ -1,5 +1,6 @@
 package com.example.see.aisafe;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ public class HistoryBencanaFragment extends Fragment {
     String keyBencana;
 
     private TextView tvUsername, tvTanggal, tvWaktu;
+    private Button btnDetail;
     private TableLayout tableHistory;
 
     @Nullable
@@ -53,15 +56,21 @@ public class HistoryBencanaFragment extends Fragment {
                         tvUsername = new TextView(getActivity());
                         tvTanggal = new TextView(getActivity());
                         tvWaktu = new TextView(getActivity());
+                        btnDetail = new Button(getActivity());
                         tvUsername.setGravity(Gravity.CENTER);
                         tvTanggal.setGravity(Gravity.CENTER);
                         tvWaktu.setGravity(Gravity.CENTER);
+                        btnDetail.setGravity(Gravity.CENTER);
+                        btnDetail.setText("Detail");
+                        btnDetail.setBackgroundColor(Color.parseColor("#80000000"));
+                        btnDetail.setTextColor(Color.parseColor("#2b2bf2"));
                         tvTanggal.setText(((DataSnapshot)iterator1.next()).getValue().toString());
                         tvUsername.setText(((DataSnapshot)iterator1.next()).getValue().toString());
                         tvWaktu.setText(((DataSnapshot)iterator1.next()).getValue().toString());
                         row.addView(tvUsername);
                         row.addView(tvTanggal);
                         row.addView(tvWaktu);
+                        row.addView(btnDetail);
                         tableHistory.addView(row);
                     }
                 }

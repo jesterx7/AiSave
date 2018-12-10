@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +34,11 @@ public class EditSektor extends Fragment {
     View myView;
     EditText edtJumlahKerusakan, edtJumlahKorban;
     ListView lvKebutuhanSektor;
+    RelativeLayout mainLayoutEdit;
     Button btnAddList, btnUpdate;
     String jumlahKerusakan, jumlahKorban, keyBencana, namaSektor;
     EditText edtInputKebutuhan, edtInputQty;
+    ProgressBar progressBar;
 
     private ArrayList<String> infoSektor = new ArrayList<>();
     private ArrayList<String> listKebutuhan = new ArrayList<>();
@@ -53,6 +58,7 @@ public class EditSektor extends Fragment {
         lvKebutuhanSektor = myView.findViewById(R.id.lvKebutuhanSektor);
         btnAddList = myView.findViewById(R.id.btnAddList);
         btnUpdate = myView.findViewById(R.id.btnSubmit);
+        mainLayoutEdit = myView.findViewById(R.id.mainLayoutEdit);
 
         infoSektor = getArguments().getStringArrayList("infoSektor");
         listKebutuhan = getArguments().getStringArrayList("listKebutuhan");
@@ -61,6 +67,12 @@ public class EditSektor extends Fragment {
         namaSektor = getArguments().getString("namaSektor");
         updateListKebutuhan = listKebutuhan;
         updateQtyKebutuhan = qtyKebutuhan;
+
+        progressBar = new ProgressBar(getContext());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mainLayoutEdit.addView(progressBar,params);
+        progressBar.setVisibility(View.INVISIBLE);
 
 
         jumlahKerusakan = infoSektor.get(0);
@@ -89,7 +101,7 @@ public class EditSektor extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("MASUK PERTAMA");
+                progressBar.setVisibility(View.VISIBLE);
                 try {
                     System.out.println("BERHASIL SAMPAI");
                     System.out.println(root.child("Aset Rusak"));
@@ -100,6 +112,7 @@ public class EditSektor extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             updateListKebutuhan(dataSnapshot, rootListKebutuhan);
+                            Toast.makeText(getContext(), "Update Success", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -109,7 +122,9 @@ public class EditSektor extends Fragment {
                     });
                 } catch (Exception e) {
                     System.out.println("ERRORRR : " + e.getMessage());
+                    Toast.makeText(getContext(), "Update Failed", Toast.LENGTH_SHORT).show();
                 }
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
 

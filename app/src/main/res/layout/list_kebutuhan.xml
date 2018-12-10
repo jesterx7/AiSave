@@ -80,25 +80,19 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabEdit"
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/fabMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_edit_black"
-        android:backgroundTint="#00e016"
-        app:borderWidth="0dp"
-        android:layout_margin="16dp"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/fabEdit"
-        android:src="@drawable/ic_star_white"
-        android:backgroundTint="#00e016"
-        app:borderWidth="0dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_margin="16dp"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/sektor_menu"
+        app:fabDrawable="@drawable/ic_list_black"
+        app:fabBackgroundTint="@color/colorPrimary"
+        app:miniFabBackgroundTint="@color/colorPrimary"
+        app:miniFabDrawableTint="@android:color/white"
+        app:miniFabTitleTextColor="@android:color/black" />
 </RelativeLayout>
