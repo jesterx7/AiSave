@@ -62,7 +62,7 @@ public class HistoryBencanaFragment extends Fragment {
                         tvWaktu.setGravity(Gravity.CENTER);
                         btnDetail.setGravity(Gravity.CENTER);
                         btnDetail.setText("Detail");
-                        btnDetail.setBackgroundColor(Color.parseColor("#80000000"));
+                        btnDetail.setBackgroundColor(Color.argb(0, 255,255,255));
                         btnDetail.setTextColor(Color.parseColor("#2b2bf2"));
                         tvTanggal.setText(((DataSnapshot)iterator1.next()).getValue().toString());
                         tvUsername.setText(((DataSnapshot)iterator1.next()).getValue().toString());
@@ -81,7 +81,6 @@ public class HistoryBencanaFragment extends Fragment {
 
             }
         });
-
 
         return myView;
     }
