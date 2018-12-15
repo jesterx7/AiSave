@@ -92,6 +92,7 @@ public class listBencanaFragment extends Fragment {
                                 while (iterator3.hasNext()) {
                                     listKebutuhanSektor.add(((DataSnapshot)iterator3.next()).getValue().toString());
                                 }
+                                iterator2.next();
                             }
                         }
                         bencana.setJumlahKerusakan(jumlahKerusakan);

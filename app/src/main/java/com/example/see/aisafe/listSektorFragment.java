@@ -98,6 +98,7 @@ public class listSektorFragment extends Fragment {
                         while (iterator1.hasNext()) {
                             listKebutuhanSektor.add(((DataSnapshot)iterator1.next()).getValue().toString());
                         }
+                        iterator.next();
                         sektor.setListKebutuhan(listKebutuhanSektor);
                     }
                     listDetailSektor.add(sektor);

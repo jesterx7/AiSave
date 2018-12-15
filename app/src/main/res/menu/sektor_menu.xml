@@ -8,5 +8,8 @@
         android:title="History Edit"
         android:icon="@drawable/ic_star_white"
         android:id="@+id/history_kebutuhan"/>
-
+    <item
+        android:title="Location"
+        android:icon="@drawable/ic_gps_fixed_black"
+        android:id="@+id/sektor_location"/>
 </menu>

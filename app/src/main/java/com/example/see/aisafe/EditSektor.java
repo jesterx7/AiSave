@@ -81,9 +81,6 @@ public class EditSektor extends Fragment {
         edtJumlahKerusakan.setText(jumlahKerusakan);
         edtJumlahKorban.setText(jumlahKorban);
 
-        System.out.println("LIST KEBUTUHAN : " + listKebutuhan);
-        System.out.println("QTY KEBUTUHAN :" + qtyKebutuhan);
-
         final CustomAdapter adapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
         lvKebutuhanSektor.setAdapter(adapter);
 
@@ -103,11 +100,8 @@ public class EditSektor extends Fragment {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 try {
-                    System.out.println("BERHASIL SAMPAI");
-                    System.out.println(root.child("Aset Rusak"));
                     root.child("Aset Rusak").setValue(edtJumlahKerusakan.getText().toString());
                     root.child("Korban Jiwa").setValue(edtJumlahKorban.getText().toString());
-                    System.out.println("BERHASIL SAMPAI SINI");
                     rootListKebutuhan.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,7 +115,6 @@ public class EditSektor extends Fragment {
                         }
                     });
                 } catch (Exception e) {
-                    System.out.println("ERRORRR : " + e.getMessage());
                     Toast.makeText(getContext(), "Update Failed", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
@@ -163,7 +156,6 @@ public class EditSektor extends Fragment {
             count++;
         }
         if (map != null) {
-            System.out.println(map);
             rootListKebutuhan.updateChildren(map);
         }
     }

@@ -48,7 +48,7 @@ public class listKebutuhan extends Fragment {
     ListView lvKebutuhan;
     FabSpeedDial fabMenu;
 
-    private String namaSektor;
+    private String namaSektor, lokasiSektor;
     private ArrayList<String> listKebutuhan = new ArrayList<>();
     private ArrayList<String> qtyKebutuhan = new ArrayList<>();
     private ArrayList<String> infoSektor = new ArrayList<>();
@@ -100,6 +100,16 @@ public class listKebutuhan extends Fragment {
                     fragmentTransaction.replace(R.id.content_frame, fragment);
                     fragmentTransaction.addToBackStack("tag");
                     fragmentTransaction.commit();
+                } else if (menuItem.getTitle().equals("Location")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lokasiSektor", lokasiSektor);
+                    Fragment fragment = new SektorGMap();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    fragmentTransaction.addToBackStack("tag");
+                    fragmentTransaction.commit();
                 } else {
 
                 }
@@ -142,6 +152,7 @@ public class listKebutuhan extends Fragment {
                     while (iterator1.hasNext()) {
                         listKebutuhan.add(((DataSnapshot)iterator1.next()).getKey().toString());
                     }
+                    lokasiSektor = ((DataSnapshot)iterator.next()).getValue().toString();
                 }
                 tvQtyKerusakan.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US)
                         .format(Long.parseLong(infoSektor.get(0))));
