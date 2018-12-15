@@ -66,9 +66,6 @@ public class listKebutuhan extends Fragment {
 
         final String keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("sektor");
-        listKebutuhan = getArguments().getStringArrayList("listKebutuhanSektor");
-
-        System.out.println("QTY KEBUTUHAN : " + qtyKebutuhan);
 
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listKebutuhan);
         final CustomAdapter customAdapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
@@ -143,7 +140,6 @@ public class listKebutuhan extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterator iterator = dataSnapshot.getChildren().iterator();
-                listKebutuhan.clear();
                 infoSektor.clear();
                 while (iterator.hasNext()) {
                     infoSektor.add(((DataSnapshot)iterator.next()).getValue().toString());

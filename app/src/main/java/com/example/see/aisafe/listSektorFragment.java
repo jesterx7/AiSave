@@ -88,18 +88,13 @@ public class listSektorFragment extends Fragment {
 
                 while (i1.hasNext()) {
                     sektor = new Sektor();
-                    ArrayList<String>listKebutuhanSektor = new ArrayList<>();
                     Iterator iterator = ((DataSnapshot)i1.next()).getChildren().iterator();
                     sektor.setNamaSektor(listSektor.get(count));
                     while (iterator.hasNext()) {
                         sektor.setJumlahKerusakan(((DataSnapshot)iterator.next()).getValue().toString());
                         sektor.setJumlahKorban(((DataSnapshot)iterator.next()).getValue().toString());
-                        Iterator iterator1 = ((DataSnapshot)iterator.next()).getChildren().iterator();
-                        while (iterator1.hasNext()) {
-                            listKebutuhanSektor.add(((DataSnapshot)iterator1.next()).getValue().toString());
-                        }
                         iterator.next();
-                        sektor.setListKebutuhan(listKebutuhanSektor);
+                        iterator.next();
                     }
                     listDetailSektor.add(sektor);
                     count++;
@@ -123,7 +118,6 @@ public class listSektorFragment extends Fragment {
             public void onClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString("keyBencana", keyBencana);
-                bundle.putStringArrayList("listKebutuhanSektor", listDetailSektor.get(position).getListKebutuhan());
                 bundle.putString("sektor", listSektor.get(position));
                 Fragment fragment = new listKebutuhan();
                 fragment.setArguments(bundle);
