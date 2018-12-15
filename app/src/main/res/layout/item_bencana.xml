@@ -32,9 +32,11 @@
                     android:id="@+id/tvNamaBencana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="17dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textSize="16dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="12sp"
+                    android:textColor="#232F34"
                     android:textStyle="bold" />
             </LinearLayout>
             <ImageView
@@ -46,16 +48,18 @@
                 android:id="@+id/tvKorban"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:textColor="#616163"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14dp"
+                android:textColor="#232F34"
                 android:paddingTop="10dp"
                 android:paddingLeft="16dp"/>
             <TextView
                 android:id="@+id/tvKerusakan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:textColor="#616163"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14dp"
+                android:textColor="#232F34"
                 android:paddingLeft="16dp"
                 android:paddingBottom="10dp"/>
 

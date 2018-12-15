@@ -1,8 +1,12 @@
 package com.example.see.aisafe;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -44,6 +48,7 @@ public class listBencanaFragment extends Fragment {
     private ArrayList<String>listKey = new ArrayList<>();
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +64,7 @@ public class listBencanaFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("List Bencana");
 
         progressBar = new ProgressBar(getContext());
+        progressBar.setIndeterminateTintList(ColorStateList.valueOf(Color.parseColor("#028e00")));
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         layout.addView(progressBar,params);

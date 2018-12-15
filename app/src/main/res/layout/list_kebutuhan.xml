@@ -19,6 +19,7 @@
                 android:id="@+id/tvInfoKerusakan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lekton_bold"
                 android:text="Jumlah Kerusakan "
                 android:textSize="15dp"
                 android:textStyle="bold" />
@@ -26,6 +27,7 @@
                 android:id="@+id/tvQtyKerusakan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lekton_regular"
                 android:paddingLeft="10dp"/>
         </LinearLayout>
 
@@ -33,28 +35,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
             <TextView
                 android:id="@+id/tvInfoKorban"
-                android:text="Jumlah Korban        "
+                android:text="Jumlah Korban    "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lekton_bold"
                 android:textSize="15dp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/tvQtyKorban"
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lekton_regular"/>
         </LinearLayout>
         <TextView
             android:id="@+id/tvInfoKebutuhan"
             android:text="List Kebutuhan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/lekton_bold"
             android:textSize="15dp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="5dp"/>
         <LinearLayout
             android:id="@+id/llListKebutuhan"
             android:layout_width="match_parent"
@@ -69,13 +74,15 @@
                 <ListView
                     android:id="@+id/lvKebutuhan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></ListView>
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_semibold"></ListView>
                 <ListView
                     android:id="@+id/lvQtyKebutuhan"
                     android:layout_gravity="end"
                     android:textAlignment="textEnd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></ListView>
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_semibold"></ListView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

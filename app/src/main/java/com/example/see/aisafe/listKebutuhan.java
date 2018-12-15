@@ -49,9 +49,9 @@ public class listKebutuhan extends Fragment {
     FabSpeedDial fabMenu;
 
     private String namaSektor, lokasiSektor;
-    private ArrayList<String> listKebutuhan = new ArrayList<>();
-    private ArrayList<String> qtyKebutuhan = new ArrayList<>();
-    private ArrayList<String> infoSektor = new ArrayList<>();
+    private ArrayList<String> listKebutuhan;
+    private ArrayList<String> qtyKebutuhan;
+    private ArrayList<String> infoSektor;
 
     @Nullable
     @Override
@@ -66,6 +66,10 @@ public class listKebutuhan extends Fragment {
 
         final String keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("sektor");
+
+        listKebutuhan = new ArrayList<>();
+        qtyKebutuhan = new ArrayList<>();
+        infoSektor = new ArrayList<>();
 
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listKebutuhan);
         final CustomAdapter customAdapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
@@ -150,8 +154,7 @@ public class listKebutuhan extends Fragment {
                     }
                     lokasiSektor = ((DataSnapshot)iterator.next()).getValue().toString();
                 }
-                tvQtyKerusakan.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US)
-                        .format(Long.parseLong(infoSektor.get(0))));
+                tvQtyKerusakan.setText(infoSektor.get(0) + " Bangunan");
                 tvQtyKorban.setText(infoSektor.get(1) + " Orang");
                 adapter.notifyDataSetChanged();
                 customAdapter.notifyDataSetChanged();

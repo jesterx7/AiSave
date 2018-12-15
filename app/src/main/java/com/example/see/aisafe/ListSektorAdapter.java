@@ -37,7 +37,7 @@ public class ListSektorAdapter extends RecyclerView.Adapter<ListSektorAdapter.Se
     public void onBindViewHolder(@NonNull SektorViewHolder sektorViewHolder, int i) {
         sektorViewHolder.tvSektor.setText(getListSektor().get(i).getNamaSektor());
         sektorViewHolder.tvKorban.setText("Korban Jiwa " + getListSektor().get(i).getJumlahKorban() + " Orang");
-        sektorViewHolder.tvKerusakan.setText("Total Kerusakan Rp. " + NumberFormat.getNumberInstance(Locale.US).format(Long.parseLong(getListSektor().get(i).getJumlahKerusakan())));
+        sektorViewHolder.tvKerusakan.setText("Jumlah Bangunan Rusak Ada " + getListSektor().get(i).getJumlahKerusakan() + " Bangunan");
     }
 
     @Override
