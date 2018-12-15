@@ -70,7 +70,6 @@ public class listBencanaFragment extends Fragment {
         layout.addView(progressBar,params);
         progressBar.setVisibility(View.VISIBLE);
 
-
         bencanaDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
