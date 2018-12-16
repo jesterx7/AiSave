@@ -61,7 +61,7 @@ public class listBencanaAdapter extends RecyclerView.Adapter<listBencanaAdapter.
     public void onBindViewHolder(@NonNull final listBencanaAdapter.BencanaViewHolder bencanaViewHolder, int i) {
         bencanaViewHolder.tvNamaBencana.setText(getListBencana().get(i).getNamaBencana());
         bencanaViewHolder.tvJumlahKorban.setText("Korban Jiwa " + String.valueOf(getListBencana().get(i).getJumlahKorbanJiwa()) + " Orang");
-        bencanaViewHolder.tvJumlahKerusakan.setText("Kerugian Rp. " + NumberFormat.getNumberInstance(Locale.US).format(getListBencana().get(i).getJumlahKerusakan()));
+        bencanaViewHolder.tvJumlahKerusakan.setText("Jumlah Bangunan Rusak Ada " + getListBencana().get(i).getJumlahKerusakan() + " Bangunan");
         Glide.with(context)
                 .load(getListBencana().get(i).getFoto())
                 .crossFade()

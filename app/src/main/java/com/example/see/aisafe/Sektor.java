@@ -10,7 +10,6 @@ class Sektor {
     private String namaSektor;
     private String jumlahKorban;
     private String jumlahKerusakan;
-    private ArrayList<String> listKebutuhan;
 
     public String getNamaSektor() {
         return namaSektor;
@@ -34,14 +33,6 @@ class Sektor {
 
     public void setJumlahKerusakan(String jumlahKerusakan) {
         this.jumlahKerusakan = jumlahKerusakan;
-    }
-
-    public ArrayList<String> getListKebutuhan() {
-        return listKebutuhan;
-    }
-
-    public void setListKebutuhan(ArrayList<String> listKebutuhan) {
-        this.listKebutuhan = listKebutuhan;
     }
 }
 

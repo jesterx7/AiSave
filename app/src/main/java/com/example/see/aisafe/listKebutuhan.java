@@ -48,10 +48,10 @@ public class listKebutuhan extends Fragment {
     ListView lvKebutuhan;
     FabSpeedDial fabMenu;
 
-    private String namaSektor;
-    private ArrayList<String> listKebutuhan = new ArrayList<>();
-    private ArrayList<String> qtyKebutuhan = new ArrayList<>();
-    private ArrayList<String> infoSektor = new ArrayList<>();
+    private String namaSektor, lokasiSektor;
+    private ArrayList<String> listKebutuhan;
+    private ArrayList<String> qtyKebutuhan;
+    private ArrayList<String> infoSektor;
 
     @Nullable
     @Override
@@ -66,9 +66,10 @@ public class listKebutuhan extends Fragment {
 
         final String keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("sektor");
-        listKebutuhan = getArguments().getStringArrayList("listKebutuhanSektor");
 
-        System.out.println("QTY KEBUTUHAN : " + qtyKebutuhan);
+        listKebutuhan = new ArrayList<>();
+        qtyKebutuhan = new ArrayList<>();
+        infoSektor = new ArrayList<>();
 
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listKebutuhan);
         final CustomAdapter customAdapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
@@ -94,6 +95,16 @@ public class listKebutuhan extends Fragment {
                     bundle.putString("keyBencana", keyBencana);
                     bundle.putString("namaSektor", namaSektor);
                     Fragment fragment = new EditSektor();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    fragmentTransaction.addToBackStack("tag");
+                    fragmentTransaction.commit();
+                } else if (menuItem.getTitle().equals("Location")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lokasiSektor", lokasiSektor);
+                    Fragment fragment = new SektorGMap();
                     fragment.setArguments(bundle);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -133,7 +144,6 @@ public class listKebutuhan extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterator iterator = dataSnapshot.getChildren().iterator();
-                listKebutuhan.clear();
                 infoSektor.clear();
                 while (iterator.hasNext()) {
                     infoSektor.add(((DataSnapshot)iterator.next()).getValue().toString());
@@ -142,9 +152,9 @@ public class listKebutuhan extends Fragment {
                     while (iterator1.hasNext()) {
                         listKebutuhan.add(((DataSnapshot)iterator1.next()).getKey().toString());
                     }
+                    lokasiSektor = ((DataSnapshot)iterator.next()).getValue().toString();
                 }
-                tvQtyKerusakan.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US)
-                        .format(Long.parseLong(infoSektor.get(0))));
+                tvQtyKerusakan.setText(infoSektor.get(0) + " Bangunan");
                 tvQtyKorban.setText(infoSektor.get(1) + " Orang");
                 adapter.notifyDataSetChanged();
                 customAdapter.notifyDataSetChanged();

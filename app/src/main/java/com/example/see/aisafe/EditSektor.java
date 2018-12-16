@@ -40,11 +40,10 @@ public class EditSektor extends Fragment {
     EditText edtInputKebutuhan, edtInputQty;
     ProgressBar progressBar;
 
-    private ArrayList<String> infoSektor = new ArrayList<>();
-    private ArrayList<String> listKebutuhan = new ArrayList<>();
-    private ArrayList<String> qtyKebutuhan = new ArrayList<>();
-    private List<String> updateListKebutuhan = new ArrayList<>();
-    private List<String> updateQtyKebutuhan = new ArrayList<>();
+    private ArrayList<String> infoSektor;
+    private ArrayList<String> listKebutuhan;
+    private ArrayList<String> qtyKebutuhan;
+    private ArrayList<String> listKebutuhanSebelum;
 
     private DatabaseReference root;
 
@@ -60,13 +59,17 @@ public class EditSektor extends Fragment {
         btnUpdate = myView.findViewById(R.id.btnSubmit);
         mainLayoutEdit = myView.findViewById(R.id.mainLayoutEdit);
 
+        infoSektor = new ArrayList<>();
+        listKebutuhan = new ArrayList<>();
+        qtyKebutuhan = new ArrayList<>();
+        listKebutuhanSebelum = new ArrayList<>();
+
         infoSektor = getArguments().getStringArrayList("infoSektor");
         listKebutuhan = getArguments().getStringArrayList("listKebutuhan");
         qtyKebutuhan = getArguments().getStringArrayList("qtyKebutuhan");
         keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("namaSektor");
-        updateListKebutuhan = listKebutuhan;
-        updateQtyKebutuhan = qtyKebutuhan;
+        listKebutuhanSebelum = listKebutuhan;
 
         progressBar = new ProgressBar(getContext());
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
@@ -74,15 +77,11 @@ public class EditSektor extends Fragment {
         mainLayoutEdit.addView(progressBar,params);
         progressBar.setVisibility(View.INVISIBLE);
 
-
         jumlahKerusakan = infoSektor.get(0);
         jumlahKorban = infoSektor.get(1);
 
         edtJumlahKerusakan.setText(jumlahKerusakan);
         edtJumlahKorban.setText(jumlahKorban);
-
-        System.out.println("LIST KEBUTUHAN : " + listKebutuhan);
-        System.out.println("QTY KEBUTUHAN :" + qtyKebutuhan);
 
         final CustomAdapter adapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
         lvKebutuhanSektor.setAdapter(adapter);
@@ -103,25 +102,10 @@ public class EditSektor extends Fragment {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 try {
-                    System.out.println("BERHASIL SAMPAI");
-                    System.out.println(root.child("Aset Rusak"));
                     root.child("Aset Rusak").setValue(edtJumlahKerusakan.getText().toString());
                     root.child("Korban Jiwa").setValue(edtJumlahKorban.getText().toString());
-                    System.out.println("BERHASIL SAMPAI SINI");
-                    rootListKebutuhan.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            updateListKebutuhan(dataSnapshot, rootListKebutuhan);
-                            Toast.makeText(getContext(), "Update Success", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                    updateListKebutuhan(rootListKebutuhan);
                 } catch (Exception e) {
-                    System.out.println("ERRORRR : " + e.getMessage());
                     Toast.makeText(getContext(), "Update Failed", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
@@ -131,15 +115,10 @@ public class EditSektor extends Fragment {
         return myView;
     }
 
-    private void updateListKebutuhan(DataSnapshot dataSnapshot, DatabaseReference rootListKebutuhan) {
-        Iterator iterator = dataSnapshot.getChildren().iterator();
+    private void updateListKebutuhan(DatabaseReference rootListKebutuhan) {
         int count = 0;
         Map<String, Object> map = new HashMap<>();
-        ArrayList<String> listKebutuhanSebelum = new ArrayList<>();
         ArrayList<String> listCheck = new ArrayList<>();
-        while (iterator.hasNext()) {
-            listKebutuhanSebelum.add(((DataSnapshot)iterator.next()).getKey());
-        }
         for (String s : listKebutuhanSebelum) {
             for (String s1 : listKebutuhan) {
                 if (s.equals(s1)) {
@@ -163,9 +142,10 @@ public class EditSektor extends Fragment {
             count++;
         }
         if (map != null) {
-            System.out.println(map);
             rootListKebutuhan.updateChildren(map);
         }
+        listKebutuhanSebelum = listKebutuhan;
+        listKebutuhan.clear();
     }
 
     private void inputKebutuhan() {
