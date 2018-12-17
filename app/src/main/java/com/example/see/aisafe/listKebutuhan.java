@@ -48,7 +48,7 @@ public class listKebutuhan extends Fragment {
     ListView lvKebutuhan;
     FabSpeedDial fabMenu;
 
-    private String namaSektor, lokasiSektor;
+    private String namaSektor, lokasiSektor, namaUser;
     private ArrayList<String> listKebutuhan;
     private ArrayList<String> qtyKebutuhan;
     private ArrayList<String> infoSektor;
@@ -66,13 +66,14 @@ public class listKebutuhan extends Fragment {
 
         final String keyBencana = getArguments().getString("keyBencana");
         namaSektor = getArguments().getString("sektor");
+        namaUser = getArguments().getString("nama");
 
         listKebutuhan = new ArrayList<>();
         qtyKebutuhan = new ArrayList<>();
         infoSektor = new ArrayList<>();
 
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listKebutuhan);
-        final CustomAdapter customAdapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan);
+        final CustomAdapter customAdapter = new CustomAdapter(getContext(), listKebutuhan, qtyKebutuhan, 0, namaUser, namaSektor);
 
         DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Bencana").child(keyBencana).child("Sektor").child(namaSektor);
         DatabaseReference rootQtyKebutuhan = FirebaseDatabase.getInstance().getReference().child("Bencana").child(keyBencana).child("Sektor").child(namaSektor).child("List Kebutuhan");
@@ -88,12 +89,14 @@ public class listKebutuhan extends Fragment {
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 if (menuItem.getTitle().equals("Edit Kebutuhan")) {
+                    System.out.println("NAMAAAAAAAA DI KEBUTUHAN" + namaUser);
                     Bundle bundle = new Bundle();
                     bundle.putStringArrayList("infoSektor", infoSektor);
                     bundle.putStringArrayList("qtyKebutuhan", qtyKebutuhan);
                     bundle.putStringArrayList("listKebutuhan", listKebutuhan);
                     bundle.putString("keyBencana", keyBencana);
                     bundle.putString("namaSektor", namaSektor);
+                    bundle.putString("nama", namaUser);
                     Fragment fragment = new EditSektor();
                     fragment.setArguments(bundle);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -111,8 +114,17 @@ public class listKebutuhan extends Fragment {
                     fragmentTransaction.replace(R.id.content_frame, fragment);
                     fragmentTransaction.addToBackStack("tag");
                     fragmentTransaction.commit();
-                } else {
-
+                } else if (menuItem.getTitle().equals("History Edit")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("namaSektor", namaSektor);
+                    bundle.putString("keyBencana", keyBencana);
+                    Fragment fragment = new HistorySektorFragment();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    fragmentTransaction.addToBackStack("tag");
+                    fragmentTransaction.commit();
                 }
                 return true;
             }
@@ -122,7 +134,6 @@ public class listKebutuhan extends Fragment {
 
             }
         });
-
 
         rootQtyKebutuhan.addValueEventListener(new ValueEventListener() {
             @Override

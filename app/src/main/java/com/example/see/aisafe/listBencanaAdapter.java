@@ -38,13 +38,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class listBencanaAdapter extends RecyclerView.Adapter<listBencanaAdapter.BencanaViewHolder>{
     private Context context;
     private ArrayList<Bencana> listBencana;
+    private String namaUser;
     private static ClickListener clickListener;
 
     public interface ClickListener {
         void onItemClick(int position, View view);
     }
 
-    public listBencanaAdapter(Context context) { this.context = context;}
+    public listBencanaAdapter(Context context, String namaUser) { this.context = context; this.namaUser = namaUser;}
 
     public ArrayList<Bencana> getListBencana() {return listBencana;}
 
@@ -73,8 +74,10 @@ public class listBencanaAdapter extends RecyclerView.Adapter<listBencanaAdapter.
         bencanaViewHolder.btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("NAMAAAAAAAA DI BENCANA" + namaUser);
                 Bundle bundle = new Bundle();
                 bundle.putString("keyBencana", bencanaViewHolder.listKey.get(bencanaViewHolder.getAdapterPosition()));
+                bundle.putString("nama", namaUser);
                 Fragment fragment = new listSektorFragment();
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = ((FragmentActivity)v.getContext()).getSupportFragmentManager();
@@ -90,6 +93,7 @@ public class listBencanaAdapter extends RecyclerView.Adapter<listBencanaAdapter.
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("keyBencana", bencanaViewHolder.listKey.get(bencanaViewHolder.getAdapterPosition()));
+                bundle.putString("nama", namaUser);
                 Fragment fragment = new HistoryBencanaFragment();
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = ((FragmentActivity)v.getContext()).getSupportFragmentManager();

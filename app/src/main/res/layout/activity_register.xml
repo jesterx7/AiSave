@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayoutRegister"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#087f23"
+    tools:context=".RegisterActivity">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:text="SIGN UP"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/rubik_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edtEmailRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+            <EditText
+                android:id="@+id/edtPasswordRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="password"/>
+            <EditText
+                android:id="@+id/edtNamaUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Lengkap" />
+            <EditText
+                android:id="@+id/edtUmurUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Umur"
+                android:inputType="number"/>
+            <EditText
+                android:id="@+id/edtUrlFoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="URL Foto Profil" />
+            <EditText
+                android:id="@+id/edtKotaAsal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kota Asal"/>
+            <EditText
+                android:id="@+id/edtNoHP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="No HP"
+                android:inputType="number"/>
+            <Button
+                android:id="@+id/btnRegister"
+                android:text="Sign up"
+                android:layout_width="65dp"
+                android:layout_height="33dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="16dp"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimaryDark" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

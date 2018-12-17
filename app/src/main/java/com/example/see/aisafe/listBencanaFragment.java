@@ -47,6 +47,7 @@ public class listBencanaFragment extends Fragment {
     private ArrayList<Bencana> LIST_BENCANA;
     private ArrayList<String>listKey = new ArrayList<>();
 
+    private String namaUser;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -60,6 +61,8 @@ public class listBencanaFragment extends Fragment {
 
         root = FirebaseDatabase.getInstance().getReference().getRoot();
         DatabaseReference bencanaDatabase = root.child("Bencana");
+
+        namaUser = getArguments().getString("nama");
 
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("List Bencana");
 
@@ -112,7 +115,8 @@ public class listBencanaFragment extends Fragment {
                     listKey.add(((DataSnapshot)i.next()).getKey());
                 }
                 rvListBencana.setLayoutManager(new LinearLayoutManager(getActivity()));
-                listBencanaAdapter adapter = new listBencanaAdapter(getContext());
+                System.out.println("NAMAAAAAAAA DI BENCANA AWAL" + namaUser);
+                listBencanaAdapter adapter = new listBencanaAdapter(getContext(), namaUser);
                 adapter.setListBencana(LIST_BENCANA);
                 rvListBencana.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);

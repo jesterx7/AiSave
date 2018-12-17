@@ -35,7 +35,7 @@ public class listSektorFragment extends Fragment {
     RecyclerView rvListSektor;
     RelativeLayout layout;
 
-    private String namaBencana;
+    private String namaBencana, namaUser;
     private List<String> listSektor = new ArrayList<>();
     private ArrayList<Sektor> listDetailSektor;
     private ProgressBar progressBar;
@@ -55,6 +55,7 @@ public class listSektorFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         final String keyBencana = getArguments().getString("keyBencana");
+        namaUser = getArguments().getString("nama");
         DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Bencana").child(keyBencana).child("Sektor");
         DatabaseReference rootNama = FirebaseDatabase.getInstance().getReference().child("Bencana").child(keyBencana).child("Nama");
 
@@ -116,9 +117,11 @@ public class listSektorFragment extends Fragment {
         rvListSektor.addOnItemTouchListener(new ListSektorListener(getContext(), rvListSektor, new ListSektorListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                System.out.println("NAMAAAAAAAA DI SEKTOR" + namaUser);
                 Bundle bundle = new Bundle();
                 bundle.putString("keyBencana", keyBencana);
                 bundle.putString("sektor", listSektor.get(position));
+                bundle.putString("nama", namaUser);
                 Fragment fragment = new listKebutuhan();
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

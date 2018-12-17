@@ -1,10 +1,19 @@
 package com.example.see.aisafe;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -21,13 +30,19 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.IndoorBuilding;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SektorGMap extends Fragment implements OnMapReadyCallback{
+public class SektorGMap extends Fragment implements OnMapReadyCallback {
     View myView;
     GoogleMap mMap;
     EditText edtLoc;
@@ -67,7 +82,6 @@ public class SektorGMap extends Fragment implements OnMapReadyCallback{
         }
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
@@ -93,7 +107,7 @@ public class SektorGMap extends Fragment implements OnMapReadyCallback{
                 Toast.makeText(getContext(), locality, Toast.LENGTH_SHORT).show();
                 double lat = address.getLatitude();
                 double longs = address.getLongitude();
-                goToLoc(lat, longs, 30, location);
+                goToLoc(lat, longs, 16, location);
             } else {
                 Toast.makeText(getContext(), "Tidak Ditemukan", Toast.LENGTH_SHORT).show();
             }

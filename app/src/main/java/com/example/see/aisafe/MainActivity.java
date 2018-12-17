@@ -1,9 +1,13 @@
 package com.example.see.aisafe;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +17,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FragmentManager fragmentManager = getSupportFragmentManager();
+    private ImageView fotoUser;
+    private TextView tvNamaUser, tvKotaAsal;
+    private String emailUser;
+    DatabaseReference root;
 
+    FirebaseAuth firebaseAuth;
+    private ArrayList<String> username;
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    final Bundle bundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +62,55 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new listBencanaFragment()).commit();
+        View headerView = navigationView.getHeaderView(0);
+
+        fotoUser = headerView.findViewById(R.id.fotoUser);
+        tvNamaUser = headerView.findViewById(R.id.tvNamaUser);
+        tvKotaAsal = headerView.findViewById(R.id.tvKotaAsal);
+        emailUser = getIntent().getStringExtra("email");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        root = FirebaseDatabase.getInstance().getReference().child("user");
+        username = new ArrayList<>();
+
+        root.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator iterator = dataSnapshot.getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Iterator iteratorBaru = ((DataSnapshot)iterator.next()).getChildren().iterator();
+                    while (iteratorBaru.hasNext()) {
+                        String emailCheck = ((DataSnapshot)iteratorBaru.next()).getValue().toString();
+                        if (emailUser.equals(emailCheck)) {
+                            Glide.with(getApplicationContext())
+                                    .load(((DataSnapshot)iteratorBaru.next()).getValue().toString())
+                                    .crossFade()
+                                    .into(fotoUser);
+                            tvKotaAsal.setText(((DataSnapshot)iteratorBaru.next()).getValue().toString());
+                            String nameFix = ((DataSnapshot)iteratorBaru.next()).getValue().toString();
+                            username.add(nameFix);
+                            tvNamaUser.setText(nameFix);
+                            iteratorBaru.next();
+                            iteratorBaru.next();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        bundle.putString("nama", emailUser);
+        Fragment fragment = new listBencanaFragment();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment);
+        fragmentTransaction.addToBackStack("tag");
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -81,11 +154,35 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new listBencanaFragment()).commit();
+            Fragment fragment = new listBencanaFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame, fragment);
+            fragmentTransaction.addToBackStack("tag");
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_settings) {
-
+            Bundle bundles = new Bundle();
+            bundles.putString("email", emailUser);
+            Fragment fragment = new SettingsFragment();
+            fragment.setArguments(bundles);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame, fragment);
+            fragmentTransaction.addToBackStack("tag");
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_history) {
-
+            Fragment fragment = new HistoryUserFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame, fragment);
+            fragmentTransaction.addToBackStack("tag");
+            fragmentTransaction.commit();
+        } else if (id == R.id.nav_sign_out) {
+            firebaseAuth.signOut();
+            Intent intent = new Intent(MainActivity.this, LoginFragment.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
